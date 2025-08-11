@@ -32,33 +32,24 @@ public class JWTAuthFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        final String authHeader = request.getHeader("Authorization");
-        final String jwtToken;
-        final String userEmail;
+        String authHeader = request.getHeader("Authorization");
 
-        // Check if Authorization header is valid
+        // No bearer header → continue chain
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        jwtToken = authHeader.substring(7);
+        String jwt = authHeader.substring(7).trim(); // strip "Bearer "
 
         try {
-            // Ignore refresh tokens in this filter (they are handled separately in /refresh endpoint)
-            String tokenType = jwtUtils.extractTokenType(jwtToken);
-            if ("refresh".equals(tokenType)) {
-                filterChain.doFilter(request, response);
-                return;
-            }
+            String username = jwtUtils.extractUsername(jwt);
 
-            userEmail = jwtUtils.extractUsername(jwtToken);
+            // Only set authentication if we don't already have one
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 
-            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = customUserDetailsService.loadUserByUsername(userEmail);
-
-                if (jwtUtils.validateToken(jwtToken, userDetails)) {
-                    SecurityContext context = SecurityContextHolder.createEmptyContext();
+                if (jwtUtils.isValidToken(jwt, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken =
                             new UsernamePasswordAuthenticationToken(
                                     userDetails,
@@ -67,14 +58,15 @@ public class JWTAuthFilter extends OncePerRequestFilter {
                             );
 
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+                    SecurityContext context = SecurityContextHolder.createEmptyContext();
                     context.setAuthentication(authToken);
                     SecurityContextHolder.setContext(context);
                 }
             }
-
-        } catch (Exception e) {
-            // Optional: Log the error or return custom error response
-            System.err.println("JWT validation failed: " + e.getMessage());
+        } catch (Exception ex) {
+            // Optional: log or customize response; continue filter chain by default
+            System.err.println("JWT validation failed: " + ex.getMessage());
         }
 
         filterChain.doFilter(request, response);
