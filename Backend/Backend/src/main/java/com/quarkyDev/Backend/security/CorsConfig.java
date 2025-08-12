@@ -1,4 +1,4 @@
-package com.phegondev.PhegonHotel.security;
+package com.quarkyDev.Backend.security;
 
 
 import org.springframework.context.annotation.Bean;

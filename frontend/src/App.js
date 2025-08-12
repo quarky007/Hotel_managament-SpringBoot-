@@ -2,7 +2,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/common/Navbar";
-import Footercomponents from "./components/common/Footer";
 import LoginPage from "./components/auth/LoginPage";
 import RegisterPage from "./components/auth/RegisterPage";
 import HomePage from "./components/home/HomePage";
@@ -77,7 +76,6 @@ function App() {
             <Route path="*" element={<Navigate to="/login" />} />
           </Routes>
         </div>
-        <Footercomponents />
       </div>
     </BrowserRouter>
   );

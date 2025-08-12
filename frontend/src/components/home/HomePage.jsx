@@ -16,17 +16,17 @@ const HomePage = () => {
       <section>
         <header className="header-banner">
           <img
-            src="./assets/images/hotel.webp"
-            alt="Phegon Hotel"
+            src="./assets/images/p_resized.jpg"
+            alt="HotelBookIn"
             className="header-image"
           />
           <div className="overlay"></div>
           <div className="animated-texts overlay-content">
             <h1>
-              Welcome to <span className="phegon-color">Phegon Hotel</span>
+              Welcome to <span className="phegon-color">HotelBookIn</span>
             </h1>
             <br />
-            <h3>Step into a haven of comfort and care</h3>
+            <h3>Your comfort, our commitment</h3>
           </div>
         </header>
       </section>
@@ -42,7 +42,7 @@ const HomePage = () => {
       </h4>
 
       <h2 className="home-services">
-        Services at <span className="phegon-color">Phegon Hotel</span>
+        Services at <span className="phegon-color">HotelBookIn</span>
       </h2>
 
       {/* SERVICES SECTION */}

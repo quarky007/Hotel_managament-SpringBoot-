@@ -6,6 +6,17 @@
   overflow-x: hidden;
 }
 
+:root {
+  --brand: #0b6b75;
+  --brand-700: #095760;
+  --text: #444;
+  --muted: #6b7280;
+  --active: #111827;
+  --hover-bg: #f3f4f6;
+  --accent: #ff7f50;
+  --ring: rgba(11, 107, 117, 0.2);
+}
+
 .colors {
   color: pink;
   color: #ff007f;
@@ -19,30 +30,44 @@
 
 /* General Navbar Styling */
 .navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 25px 70px 25px 75px;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-family: Arial, sans-serif;
-  font-size: 20px;
+  justify-content: space-between;
+  padding: 14px 28px;
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
 }
 
 .navbar-brand a {
-  font-size: 24px;
-  font-weight: bold;
-  color: #007f86;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  color: var(--brand);
   text-decoration: none;
+}
+
+.navbar-brand a:hover {
+  color: var(--brand-700);
 }
 
 .navbar-ul {
   list-style: none;
-  display: flex;
-  align-items: center;
   margin: 0;
   padding: 0;
-  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.navbar-ul li {
+  margin: 0;
+  padding: 0;
+}
+.navbar-ul li::marker {
+  content: none;
 }
 
 .navbar-ul li {
@@ -54,12 +79,65 @@
   color: #666;
   transition: color 0.5s;
 }
+.nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 8px 12px;
+  font-size: 14.5px;
+  color: var(--text);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
 
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 6px;
+  height: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: var(--brand);
+  transition: transform 0.2s ease;
+}
+.nav-link:hover {
+  background: var(--hover-bg);
+  color: var(--active);
+}
 .navbar-ul li a:hover {
   color: #ff007f;
   color: #ff7f50;
 }
+.nav-link:hover::after {
+  transform: scaleX(1);
+}
 
+.nav-link.active {
+  color: #fff;
+  background: var(--brand);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+.nav-link.active::after {
+  transform: scaleX(1);
+  background: #fff;
+}
+.btn-logout {
+  margin-left: 8px;
+  padding: 8px 12px;
+  font-size: 14.5px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  background: #111827;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-logout:hover {
+  background: #1f2937;
+  box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.15);
+}
 .navbar-ul li a.active {
   color: #ff7f50;
 }
@@ -1056,6 +1134,19 @@ h2 {
     flex-direction: column;
     gap: 10px;
   }
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 10px 14px;
+    }
+    .navbar-ul {
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .nav-link {
+      padding: 8px 10px;
+      margin: 2px 0;
+    }
+  }
 
   .admin-button {
     width: 100%;
@@ -1145,4 +1236,117 @@ h2 {
   .navbar-ul li a {
     display: block;
   }
+}
+
+/* === Auth Form Container === */
+.auth-container {
+  max-width: 350px;
+  margin: 80px auto;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.auth-container h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #1e293b; /* slate-800 */
+  font-weight: 700;
+}
+
+/* === Error Message === */
+.error-message {
+  background: #fee2e2; /* red-100 */
+  color: #b91c1c; /* red-700 */
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+/* === Form Groups === */
+.form-group {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #374151; /* gray-700 */
+}
+
+.form-group input {
+  width: 90%;
+  padding: 10px 12px;
+  font-size: 14px;
+  border: 1px solid #d1d5db; /* gray-300 */
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: #6366f1; /* indigo-500 */
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+}
+
+/* === Modern Gradient Button === */
+.auth-container button {
+  width: 100%;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  color: #fff;
+  padding: 10px 18px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.auth-container button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.auth-container button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(99, 102, 241, 0.3);
+}
+
+/* === Register Link === */
+.register-link {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.register-link a {
+  color: #6366f1;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.register-link a:hover {
+  text-decoration: underline;
+}
+.navbar-brand a {
+  font-size: 22px;
+  font-style: italic;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: #ff7f50; /* coral color */
+  text-decoration: none;
+  transition: color 0.25s ease, transform 0.2s ease;
+}
+
+.navbar-brand a:hover {
+  color: #e36f43; /* darker coral on hover */
+  transform: scale(1.05);
 }

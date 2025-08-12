@@ -20,56 +20,101 @@ function Navbar() {
 
   return (
     <nav className="navbar">
+      {/* Brand */}
       <div className="navbar-brand">
-        <NavLink to="/home">Phegon Hotel</NavLink>
+        <NavLink to="/home">HotelBookIn</NavLink>
       </div>
+
+      {/* Navigation Links */}
       <ul className="navbar-ul">
         <li>
-          <NavLink to="/home" activeclassname="active">
+          <NavLink
+            to="/home"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+          >
             Home
           </NavLink>
         </li>
         <li>
-          <NavLink to="/rooms" activeclassname="active">
+          <NavLink
+            to="/rooms"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+          >
             Rooms
           </NavLink>
         </li>
         <li>
-          <NavLink to="/find-booking" activeclassname="active">
+          <NavLink
+            to="/find-booking"
+            className={({ isActive }) =>
+              isActive ? "nav-link active" : "nav-link"
+            }
+          >
             Find my Booking
           </NavLink>
         </li>
 
         {isUser && (
           <li>
-            <NavLink to="/profile" activeclassname="active">
+            <NavLink
+              to="/profile"
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
               Profile
             </NavLink>
           </li>
         )}
         {isAdmin && (
           <li>
-            <NavLink to="/admin" activeclassname="active">
+            <NavLink
+              to="/admin"
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
               Admin
             </NavLink>
           </li>
         )}
 
         {!isAuthenticated && (
+          <>
+            <li>
+              <NavLink
+                to="/login"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+              >
+                Login
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/register"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+              >
+                Register
+              </NavLink>
+            </li>
+          </>
+        )}
+
+        {isAuthenticated && (
           <li>
-            <NavLink to="/login" activeclassname="active">
-              Login
-            </NavLink>
+            <button className="btn-logout" onClick={handleLogout}>
+              Logout
+            </button>
           </li>
         )}
-        {!isAuthenticated && (
-          <li>
-            <NavLink to="/register" activeclassname="active">
-              Register
-            </NavLink>
-          </li>
-        )}
-        {isAuthenticated && <li onClick={handleLogout}>Logout</li>}
       </ul>
     </nav>
   );
