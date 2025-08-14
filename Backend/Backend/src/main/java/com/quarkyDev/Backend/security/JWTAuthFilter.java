@@ -40,7 +40,7 @@ public class JWTAuthFilter extends OncePerRequestFilter {
             return;
         }
 
-        String jwt = authHeader.substring(7).trim(); // strip "Bearer "
+        String jwt = authHeader.substring(7).trim();
 
         try {
             String username = jwtUtils.extractUsername(jwt);
